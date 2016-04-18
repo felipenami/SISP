@@ -1,0 +1,129 @@
+(function(angular) {
+  'use strict';
+  /**
+   * 
+   */
+  angular.module('sisp')
+  	.controller('ProjetosController', function ($scope, $rootScope,$state, $mdDialog, $mdSidenav, $mdToast, $timeout, $window, $location, $locale, $http, $q ) {
+		
+      //----STATES
+        /**
+         * Representa o estado de listagem de registros.
+         */
+        $scope.LIST_STATE = "projetos.list";
+        /**
+         * Representa o estado para a criação de registros.
+         */
+        $scope.ADD_STATE = "projetos.add";
+        /**
+         * Representa o estado para a edição de registros.
+         */
+        $scope.EDIT_STATE = "projetos.edit";
+        /**
+         * Representa o estado de detalhe de um registro.
+         */
+        $scope.DETAIL_STATE = "projetos.detail";
+        
+        /**
+         * 
+         */
+        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+
+//            $state.current.breadCrumbs = [{'state': $scope.LIST_STATE, 'name': 'Usuários'}];
+
+            //Controle para mudar o botão do menu para o botão voltar da página
+            $state.current.currentState = {
+                state: $scope.LIST_STATE,
+                nameState: $state.current.name == $scope.LIST_STATE ? 'LIST_STATE' : null
+            };
+
+            switch ( $state.current.name ) {
+                case $scope.LIST_STATE: {
+                    $scope.changeToList();
+                    break;
+                }
+                case $scope.DETAIL_STATE: {
+//                    $scope.changeToDetail( $state.params.id );
+                    break;
+                }
+                case $scope.ADD_STATE: {
+                    $scope.changeToAdd();
+                    break;
+                }
+                case $scope.EDIT_STATE: {
+                	$state.go($scope.LIST_STATE);
+                }
+                    
+            }
+        });
+        
+        $scope.projects = {};
+        $scope.projectManagers = {};
+        $scope.project = {}; 
+        
+        /**
+         * 
+         */
+        $scope.calculateWindowHeight = function(){
+
+            var sectionsWindow = angular.element(document.querySelector('#sectionsWindow'));
+            if (sectionsWindow != null) {
+                var windowHeight = window.innerHeight;
+                var height = windowHeight - sectionsWindow.offset().top + 'px';
+                sectionsWindow.css('height', height);
+            }
+        };
+        
+        /**
+         * 
+         */
+        $scope.changeToList = function () {
+            console.debug("changeToList");
+            $scope.listProjects();
+
+        };
+        /**
+         * 
+         */
+        $scope.changeToAdd = function(){
+        	console.debug("changeToAdd");
+        	
+        }
+        /**
+         * 
+         */
+        function querySearchProjecManagers(filters) {
+            var deferred = $q.defer();
+            $http.get('/UserList').success( function(data)  {
+            	deferred.resolve(data);
+    		})
+            return deferred.promise;
+        }
+        $scope.querySearchProjecManagers = querySearchProjecManagers;
+        
+        /**
+         * 
+         */
+        $scope.saveProject = function(project){
+        	project.status = "ABERTO";
+	        $http.post('/projectSave', project)
+        	.success(function(data){
+        		$mdToast.showSimple("Projeto salvo com sucesso!");
+        		$state.go($scope.LIST_STATE);
+        		$scope.$apply();
+	        })
+	        .error(function(data){
+				
+			})
+			}
+        /*/*
+         * 
+         */
+        $scope.listProjects = function () {
+    		$http.get('/projectList').success( function(data)  {
+    			$scope.projects = data;
+    		})
+    	}
+        
+	});
+})(window.angular);

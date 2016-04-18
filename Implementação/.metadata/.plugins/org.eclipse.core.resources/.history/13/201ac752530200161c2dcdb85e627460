@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="./css/angular-material.min.css"/>
+<link rel="stylesheet" href="./css/theme.css"/>
+<title>Insert title here</title>
+</head>
+<body ng-controller="HomeController"> 
+<md-toolbar layout="row"  layout-align="left center">
+	<md-button ng-click="openLeftMenu()" class="md-icon-button">
+		<md-icon md-font-set="material-icons"> menu </md-icon>
+	</md-button>
+	<div style="margin-left:10px">
+		SISP
+	</div>
+	
+</md-toolbar>
+
+<md-sidenav md-component-id="left" class="md-sidenav-left" layout="column">
+	<md-toolbar class="md-tall">
+		<span flex></span>
+		<h4 class="md-toolbar-tools">
+			<span>SISP</span>
+		</h4>
+	</md-toolbar>
+	<md-toolbar>
+		<p class="md-toolbar-tools"></p>
+	</md-toolbar>
+	<div layout-align="start start"style="font-size:14px;">
+		<md-list>
+			<md-list-item ng-click="closeMenu()">
+				<p>Usuário</p>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div  layout-align="start start">
+	
+		<md-list>
+			<md-list-item ng-click="closeMenu()">
+				<p>Treinamento</p>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div>
+		<md-list>
+			<md-divider></md-divider> <!-- LINE-->
+			<div layout="column" flex style="font-size: 12px; color: #999" layout-align="end start">
+				<md-list-item ng-click="showDialogReports($event); closeMenu()">
+					<p>Relatórios</p>
+				</md-list-item>
+			</div>
+		</md-list>
+	</div>
+</md-sidenav>
+
+<div  ng-include="'/ui/projetos.html'"></div>
+      
+      
+	<!-- Angular -->
+ 	<script src="./imports/angular/angular.min.js"></script>
+  	<script src="./imports/angular/angular-animate.min.js"></script>
+  	<script src="./imports/angular/angular-aria.min.js"></script>
+  	<script src="./imports/angular/angular-messages.min.js"></script>
+
+  	<!-- Angular Material Library -->
+  	<script src="./imports/angular/angular-material.min.js"></script>
+	   	    
+   	<!-- jQuery -->
+   	
+   	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>    
+	
+	<!-- 	Main -->
+	<script type="text/javascript" src="./sisp-module.js"></script>
+	
+	<!-- Controller  -->
+
+	<script type="text/javascript" src="./controller/home-controller.js"></script>
+		
+</body>
+</html>

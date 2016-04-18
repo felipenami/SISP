@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<meta charset="UTF-8">
+<head ng-app="sisp">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="./css/angular-material.min.css"/>
+<link rel="stylesheet" href="./css/theme.css"/>
+<title>Insert title here</title>
+</head>
+<body ng-controller="HomeController"> 
+
+<md-toolbar layout="row"  layout-align="left center">
+	<md-button ng-click="openLeftMenu()" class="md-icon-button">
+		<md-icon md-font-set="material-icons"> menu </md-icon>
+	</md-button>
+	<div style="margin-left:10px">
+		SISP
+	</div>
+	
+</md-toolbar>
+
+
+
+<div  ng-include="'/ui/menu.html'"></div>
+      
+      
+	<!-- Angular -->
+ 	<script src="./imports/angular/angular.min.js"></script>
+  	<script src="./imports/angular/angular-animate.min.js"></script>
+  	<script src="./imports/angular/angular-aria.min.js"></script>
+  	<script src="./imports/angular/angular-messages.min.js"></script>
+
+  	<!-- Angular Material Library -->
+  	<script src="./imports/angular/angular-material.min.js"></script>
+	   	    
+   	<!-- jQuery -->
+   	
+   	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>    
+	
+	<!-- 	Main -->
+	<script type="text/javascript" src="./sisp-module.js"></script>
+	
+	<!-- Controller  -->
+
+	<script type="text/javascript" src="./controller/home-controller.js"></script>
+<!-- 	<script type="text/javascript" src="./controller/projetos-controller.js"></script> -->
+		
+</body>
+</html>

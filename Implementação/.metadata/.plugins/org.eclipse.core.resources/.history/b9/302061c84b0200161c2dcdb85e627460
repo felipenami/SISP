@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html >
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="./css/angular-material.min.css"/>
+<link rel="stylesheet" href="./css/theme.css"/>
+<title>Insert title here</title>
+</head>
+<body ng-controller="HomeController"> 
+<md-toolbar layout="row"  layout-align="left center">
+	<div >
+		SISP
+	</div>
+	
+</md-toolbar>
+
+
+<div style="width: 800px;" >
+	<md-list layout-fill >
+		<md-list-item class="box-list-item box-whiteframe md-whiteframe-z1 listTrainings" >
+		<div layout="column" layout-align="space-around start" style="background-color:#F5F5F5;width: 140px; height: 220px;">
+			<div flex layout="column" style="margin-top:20px; margin-left:30px;">
+				<label style="padding-bottom:5px" class="grey"> Início</label>
+			</div>
+			<div flex layout="column" style="margin-top:20px; margin-left:30px">
+				<label style="padding-bottom:5px" class="grey"> Término</label>
+			</div>
+			<div flex layout="column" style="margin-top:20px; margin-left:30px">
+				<label style="padding-bottom:5px" class="grey"> Horário</label>
+			</div>
+		</div>
+		</md-list-item>
+	</md-list>
+
+</div>
+      
+      
+	<!-- Angular -->
+ 	<script src="./imports/angular/angular.min.js"></script>
+  	<script src="./imports/angular/angular-animate.min.js"></script>
+  	<script src="./imports/angular/angular-aria.min.js"></script>
+  	<script src="./imports/angular/angular-messages.min.js"></script>
+
+  	<!-- Angular Material Library -->
+  	<script src="./imports/angular/angular-material.min.js"></script>
+	   	    
+   	<!-- jQuery -->
+   	
+   	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>    
+	
+	<!-- 	Main -->
+	<script type="text/javascript" src="./sisp-module.js"></script>
+	
+	<!-- Controller  -->
+
+	<script type="text/javascript" src="./controller/home-controller.js"></script>
+		
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="pt">
+<meta charset="UTF-8">
+<div style="width: 800px;margin:0 auto;position:relative; overflow">
+	<div layout="column" layout-align="center center" >
+	  <md-content layout-padding layout-fill>
+	      <form name="projectForm">
+	        <div layout-gt-sm="row">
+	          <md-input-container class="md-block" flex-gt-sm>
+	            <label>Titulo do Projeto</label>
+	            <input ng-model="project.name">
+	          </md-input-container>
+	        </div>
+	        <div layout-gt-sm="row">
+	          <md-input-container class="md-block" flex-gt-sm>
+	            <label>Gerente do Projeto</label>
+	            <md-select ng-model="user.state">
+	              <md-option ng-repeat="state in states" value="{{state.abbrev}}">
+	                {{state.abbrev}}
+	              </md-option>
+	            </md-select>
+	          </md-input-container>
+	          </div>
+	        <div layout-gt-xs="row">
+	          <md-datepicker ng-model="project.initialDate" md-placeholder="Data inicial">
+	          </md-datepicker>
+	          </md-input-container>
+	          <md-datepicker ng-model="project.finalDate" md-placeholder="Data final">
+	          </md-datepicker>
+	        </div>
+          </form>
+	  </md-content>
+	</div>
+</div>	

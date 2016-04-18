@@ -1,0 +1,52 @@
+package br.edu.udc.projectmanager.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.edu.udc.projectmanager.entity.Project;
+import br.edu.udc.projectmanager.repository.IProjectRepository;
+
+@Service
+@Transactional
+public class ProjectService {
+
+	/*-------------------------------------------------------------------
+	 *				 		     ATTRIBUTES
+	 *-------------------------------------------------------------------*/
+	@Autowired
+	private IProjectRepository projectRepository;
+	/*-------------------------------------------------------------------
+	 *				 		     SERVICES
+	 *-------------------------------------------------------------------*/
+	
+	/**
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project insertProjeto(Project project)
+	{
+		return this.projectRepository.save(project);
+	}
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Project findById (Long id)
+	{
+		return this.projectRepository.findOne(id);
+	}
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Project> findAll()
+	{
+		return this.projectRepository.findAll();
+	}
+	
+}

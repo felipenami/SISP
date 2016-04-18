@@ -1,0 +1,28 @@
+<html lang="pt-br">
+<meta charset="UTF-8">
+<md-sidenav md-component-id="left" class="md-sidenav-left" layout="column">
+	<md-toolbar class="md-tall">
+		<span flex></span>
+		<h4 class="md-toolbar-tools">
+			<span>SISP</span>
+		</h4>
+	</md-toolbar>
+	<md-toolbar>
+		<p class="md-toolbar-tools"></p>
+	</md-toolbar>
+	<div layout-align="start start"style="font-size:14px;">
+		<md-list>
+			<md-list-item ng-click="closeMenu()">
+				<p>Usuário</p>
+			</md-list-item>
+		</md-list>
+	</div>
+	<div  layout-align="start start">
+	
+		<md-list>
+			<md-list-item ng-click="closeMenu()">
+				<p>Projetos</p>
+			</md-list-item>
+		</md-list>
+	</div>
+</md-sidenav>

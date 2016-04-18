@@ -1,0 +1,5 @@
+package br.edu.udc.projectmanager.repository;
+
+public interface IUserRepository {
+
+}

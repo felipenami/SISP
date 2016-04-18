@@ -1,0 +1,99 @@
+(function(angular) {
+  'use strict';
+  /**
+   * 
+   */
+  angular.module('sisp')
+  	.controller('ProjetosController', function ($scope, $rootScope,$state, $mdDialog, $mdSidenav, $mdToast, $timeout, $window, $location, $locale, $http ) {
+		
+      //----STATES
+        /**
+         * Representa o estado de listagem de registros.
+         */
+        $scope.LIST_STATE = "projetos.list";
+        /**
+         * Representa o estado para a criação de registros.
+         */
+        $scope.ADD_STATE = "projetos.add";
+        /**
+         * Representa o estado para a edição de registros.
+         */
+        $scope.EDIT_STATE = "projetos.edit";
+        /**
+         * Representa o estado de detalhe de um registro.
+         */
+        $scope.DETAIL_STATE = "projetos.detail";
+        
+        /**
+         * 
+         */
+        $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
+
+//            $state.current.breadCrumbs = [{'state': $scope.LIST_STATE, 'name': 'Usuários'}];
+
+            //Controle para mudar o botão do menu para o botão voltar da página
+            $state.current.currentState = {
+                state: $scope.LIST_STATE,
+                nameState: $state.current.name == $scope.LIST_STATE ? 'LIST_STATE' : null
+            };
+
+            switch ( $state.current.name ) {
+                case $scope.LIST_STATE: {
+                    $scope.changeToList();
+                    break;
+                }
+                case $scope.DETAIL_STATE: {
+//                    $scope.changeToDetail( $state.params.id );
+                    break;
+                }
+                case $scope.ADD_STATE: {
+                    $scope.changeToAdd();
+                    break;
+                }
+                case $scope.EDIT_STATE: {
+                	$state.go($scope.LIST_STATE);
+                }
+                    
+            }
+        });
+        
+        $scope.projects = {};
+        $scope.projectManagers = {};
+        
+        
+        /**
+         * 
+         */
+        $scope.changeToList = function () {
+            console.debug("changeToList");
+            $scope.listProjects();
+
+        };
+        /**
+         * 
+         */
+        $scope.changeToAdd = function(){
+        	console.debug("changeToAdd");
+        	$scope.listUsers();
+        	
+        }
+        /**
+         * 
+         */
+        $scope.listUsers = function(){
+        	$http.get('/UserList').success( function(data)  {
+    			$scope.projectManagers = data;
+    		})
+        	
+        }
+        /*/*
+         * 
+         */
+        $scope.listProjects = function () {
+    		$http.get('/projectList').success( function(data)  {
+    			$scope.projects = data;
+    		})
+    	}
+        
+	});
+})(window.angular);

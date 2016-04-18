@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="pt">
+<meta charset="UTF-8">
+<div style="width: 800px;margin:0 auto;position:relative;">
+	<div layout="column" layout-align="center center" >
+		<md-list layout-fill >
+				<md-list-item ng-repeat="project in projects" id="listBackground_{{$index}}" class="box-list-item box-whiteframe md-whiteframe-z1 listTrainings" >
+					<div layout="column" layout-align="space-around start" style="background-color:#F5F5F5;width: 140px; height: 220px;">
+						<div flex layout="column" style="margin-top:20px; margin-left:30px;">
+							<label style="padding-bottom:5px" class="grey"> Início</label>
+							<label class="blue margin-bottom-item">{{project.initialDate | date: 'dd EEE' }} </label>
+						</div>
+						<div flex layout="column" style="margin-top:20px; margin-left:30px">
+							<label style="padding-bottom:5px" class="grey"> Término</label>
+							<label>{{project.finalDate | date: 'dd EEE'}} </label>
+						</div>
+					</div>
+					<div layout="column" layout-align="start start" class="child-list-item padding-top-item" flex="60" style="margin-left: 30px;margin-top: 20px;">
+						<div class="margin-bottom-item">
+							
+						</div>
+						<div class="blue margin-bottom-item box-text-overflow" style="width:100%;">
+							<label title="{{project.name}}"><b>{{project.name}}</b></label>
+						</div>
+						<div class="line-separator margin-bottom-item"></div>
+							<div layout="row" >
+								<md-icon style="padding-right:15px;" md-font-set="material-icons"> person </md-icon>
+								<label>{{project.projectManager.name}}</label>
+							</div>
+						</div>
+					</div>
+					<div layout="row" layout-align="end start" class="child-list-item padding-top-item" flex style="margin:15px 0 0 35px;">
+						<div style="color: #4caf50">
+							<label ng-if="(project.status == 'ABERTO')">Aberto</label>
+							<label ng-if="(project.status == 'EM_EXECUCAO')">Execução</label>
+							<label ng-if="(project.status == 'PARADO')">Parado</label>
+							<label ng-if="(project.status == 'CONCLUIDO')">Concluído</label>
+							<label ng-if="(project.status == 'CANCELADO')">Cancelado</label>
+						</div>
+					</div>
+					<div  layout="row" layout-align="end start" class="child-list-item" flex>
+						<div>
+							<md-menu md-offset="-30 25">
+								<md-button aria-label="Open demo menu" class="md-icon-button md-icon-more-vert md-icon-lg" ng-click="$mdOpenMenu()">
+								</md-button>
+								<md-menu-content width="2">
+									<md-menu-item ng-if="(authenticatedUser.role == 'ADMINISTRATOR' || training.responsible.id == training.responsible.id || authenticatedUser.userId == training.responsible.id) && training.statusTraining != 'FINALIZED'">
+										<md-button ng-click="$state.go( EDIT_STATE, {id:training.id})"><span md-menu-align-target>Editar</span></md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button ng-click="openPopupDetail(event, training)"><span md-menu-align-target>Visualizar</span></md-button>
+									</md-menu-item>
+									<md-menu-item ng-if="authenticatedUser.role == 'ADMINISTRATOR' || training.responsible.id == training.responsible.id || authenticatedUser.userId == training.responsible.id">
+										<md-button ng-click="changeToRemove($event, training)"><span md-menu-align-target>Excluir</span></md-button>
+									</md-menu-item>
+								</md-menu-content>
+							</md-menu>
+							<md-tooltip>Opções do registro</md-tooltip>
+						</div>
+					</div>
+				</md-list-item>
+			</md-list>
+	</div>
+</div>
+<md-button class="md-fab md-fab-bottom-right md-primary" ng-click="$state.go( ADD_STATE )" aria-label="Novo Projeto">
+	<md-icon md-font-set="material-icons"> add </md-icon>
+</md-button>	
+</body>
+</html>
