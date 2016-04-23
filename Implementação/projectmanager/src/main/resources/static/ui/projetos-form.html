@@ -5,6 +5,7 @@
 <div style="width: 800px;margin:0 auto;position:relative;">
 	<div layout="column" layout-align="center center" >
 	  <md-content layout-padding layout-fill style="margin-top: 10px; padding-bottom: 30px;">
+	  <h4>Informações do Projeto</h4>
 	      <form name="projectForm">
 	        <div layout-gt-sm="row">
 	          <md-input-container class="md-block" flex-gt-sm>
@@ -24,10 +25,11 @@
 													 md-items="projectManager in querySearchProjecManagers(searchText)"
 													 md-item-text="projectManager.name"
 													 md-min-length="1"
-													 md-floating-label="Geremte do projeto">
+													 md-floating-label="Gerente do projeto">
 										<md-item-template>
 											<span md-highlight-text="searchText">{{projectManager.name}}</span>
 										</md-item-template>
+				</md-autocomplete>
 	          </div>
 	        <div layout-gt-xs="row">
 	          <md-datepicker ng-model="project.initialDate" md-placeholder="Data inicial">
@@ -37,9 +39,40 @@
 	          </md-datepicker>
 	        </div>
           </form>
+          
+          <md-tabs md-dynamic-height md-border-bottom>]
+          <md-tab label="Atividades">
+        	<md-content class="md-padding">
+			  <div layout="row">
+			  	<div layout="row" flex="20">
+					<h3>Atividades</h3>
+				</div>
+				 <div layout="row" layout-align="end start" class="colorNested" flex style="padding-top:10px;">
+				 	<md-button ng-click="openPopupAtividade(event)"  class="md-raised">ADICIONAR ATIVIDADE</md-button>
+				 </div>
+			  </div>
+			  </md-content>
+      		</md-tab>
+      		<md-tab label="Milestones">
+	        	<md-content class="md-padding">
+		        	<div layout="row">
+		        		<h3>Milestones</h3>
+					 </div>
+				  	</div>
+	        	</md-content>
+        	</md-tab>
+          
 	  </md-content>
 	</div>
 </div>	
-<md-button class="md-fab md-fab-bottom-right md-primary" ng-click="saveProject(project)" aria-label="Novo Projeto">
+
+
+
+
+<md-button ng-if="!project.id" class="md-fab md-fab-bottom-right md-primary" ng-if="" ng-click="saveProject(project)" aria-label="Novo Projeto">
+	<md-icon md-font-set="material-icons"> save </md-icon>
+</md-button>
+	
+<md-button ng-if="project.id" class="md-fab md-fab-bottom-right md-primary" ng-if="" ng-click="updateProject(project)" aria-label="ALterar Projeto">
 	<md-icon md-font-set="material-icons"> save </md-icon>
 </md-button>	

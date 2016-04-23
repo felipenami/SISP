@@ -138,8 +138,8 @@ md-input-container label {
 }
 
 .header-filters input{
-    width       : 94%;
-    height		: 30px;
+    width       : 92%;
+    height		: 40px;
     margin		: 0;
     padding		: 0;
     border		: none;
@@ -150,7 +150,8 @@ md-input-container label {
 }
 
 .header-filters md-icon.md-icon-search{
-    margin: 15px 0 0 15px;
+    margin: 0px 0 0 15px;
+    padding-right: 10px;
     color: #FFFFFF;
     cursor: pointer;
 }

@@ -91,21 +91,17 @@ public class Project extends AbstractEntity {
 	/**
 	 * 
 	 */
-//	public Project (Long id, ProjectStatus status, Calendar initialDate, Calendar finalDate, 
-//			Long projectManagerId, String name, String projectManagerName)
-//	{
-//		super(id);
-//		this.status = status;
-//		this.initialDate = initialDate;
-//		this.finalDate = finalDate;
-//		this.name = name;
-//		this.projectManager = new User();
-//		projectManager.setId(projectManagerId);
-//		projectManager.setName(projectManagerName);
-//		
-//		this.setProjectManager(projectManager);
-//		
-//	}
+	public Project (Long id, ProjectStatus status, Calendar initialDate, Calendar finalDate, 
+			String name, User projectManager)
+	{
+		super(id);
+		this.status = status;
+		this.initialDate = initialDate;
+		this.finalDate = finalDate;
+		this.name = name;
+		this.projectManager = new User();
+		
+	}
 	
 	/*-------------------------------------------------------------------
 	 *				 		     BEHAVIORS

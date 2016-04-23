@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:ng="http://angularjs.org" lang="pt">
 <meta charset="UTF-8">
+		<div class="header-filters" id="toolbarFilter">
+		<md-icon class="md-icon-lg md-icon-search" md-font-set="material-icons" ng-click="changeToList( model.filters )"> search </md-icon>
+			<input type="text" placeholder="Pesquisar" ng-model="model.filters.terms" ng-keyup="listTrainingsByEvents($event)"/>
+		</div>
 
 <div style="width: 800px;margin:0 auto;position:relative; overflow:auto;">
 <div layout-fill layout="row" style="height:35px;">
@@ -10,7 +14,7 @@
 	</div>
 	<div layout="column" layout-align="center center" >
 		<md-list layout-fill >
-				<md-list-item ng-repeat="project in projects" id="listBackground_{{$index}}" class="box-list-item box-whiteframe md-whiteframe-z1 listTrainings" >
+				<md-list-item ng-repeat="project in projects | filter: model.filters.terms" id="listBackground_{{$index}}" class="box-list-item box-whiteframe md-whiteframe-z1 listTrainings" >
 					<div layout="column" layout-align="space-around start" style="background-color:#F5F5F5;width: 140px; height: 220px;">
 						<div flex layout="column" style="margin-top:20px; margin-left:30px;">
 							<label style="padding-bottom:5px" class="grey"> Início</label>
@@ -59,7 +63,7 @@
 										<md-button ng-click="openPopupDetail(event, training)"><span md-menu-align-target>Visualizar</span></md-button>
 									</md-menu-item>
 									<md-menu-item>
-										<md-button ng-click="changeToRemove($event, training)"><span md-menu-align-target>Excluir</span></md-button>
+										<md-button ng-click="changeToRemove($event, project.id)"><span md-menu-align-target>Excluir</span></md-button>
 									</md-menu-item>
 								</md-menu-content>
 							</md-menu>

@@ -24,6 +24,27 @@
          */
         $scope.DETAIL_STATE = "projetos.detail";
         
+        $scope.model = {
+        		
+                filters: {
+                    terms: [],
+                },
+                projects     : [],
+                page: {//PageImpl
+                    content: null,
+                    pageable: {//PageRequest
+                        size: 9,
+                        page: 0,
+                        sort: {//Sort
+                            orders: [
+                                { direction: 'ASC' }
+                            ]
+                        }
+                    }
+                }
+            };
+        
+        
         /**
          * 
          */
@@ -57,22 +78,10 @@
             }
         });
         
-        $scope.projects = {};
+        $scope.projects = [];
         $scope.projectManagers = {};
         $scope.project = {}; 
         
-        /**
-         * 
-         */
-//        $scope.calculateWindowHeight = function(){
-//
-//            var sectionsWindow = angular.element(document.querySelector('#sectionsWindow'));
-//            if (sectionsWindow != null) {
-//                var windowHeight = window.innerHeight;
-//                var height = windowHeight - sectionsWindow.offset().top + 'px';
-//                sectionsWindow.css('height', height);
-//            }
-//        };
         /**
          *  
          */
@@ -88,14 +97,63 @@
 	        })
 	        .error(function(data){
 	        	$mdToast.showSimple(data);
-                $scope.$apply();
 			})
         }
+        /**
+         * Realiza os procedimentos iniciais (prepara o estado)
+         * para a tela de exclusão.
+         * Antes de excluir, o usuário notificado para confirmação e só então o registro é excluido.
+         */
+        $scope.changeToRemove = function (event, projectId) {
+            console.debug("changeToRemove", projectId);
+
+            var confirm = $mdDialog.confirm()
+                .title('Tem certeza que deseja excluir este registro?')
+                .content('Não será possível recuperar este registro se for excluído.')
+                .ok('Sim')
+                .cancel('Cancelar')
+                .targetEvent(event);
+
+            $mdDialog.show(confirm).then(function (result) {
+            	$http.post('/deleteProject', projectId)
+        		.success(function(data){
+        			if( $state.current.name == $scope.LIST_STATE){
+                        $scope.changeToList();
+                    } else {
+                        $state.go( $scope.LIST_STATE );
+                    }
+                    $mdToast.showSimple("O registro foi excluído com sucesso!");
+        			
+        		})
+        		.error(function(data){
+                    $mdToast.showSimple(data);
+                    $state.go($scope.LIST_STATE);
+    			})
+
+            });
+        };
+        
+        
+        /**
+         * 
+         */
+        $scope.updateProject = function (project){
+        	$http.post('/updateProject', project)
+        		.success(function(data){
+        			$mdToast.showSimple("Projeto editado com sucesso!");
+        			$state.go($scope.LIST_STATE);
+        			
+        		})
+        		.error(function(data){
+    	        	$mdToast.showSimple(data);
+    			})
+        	}
         /**
          * 
          */
         $scope.changeToList = function (id) {
             console.debug("changeToList", id);
+            
             $scope.listProjects();
 
         };
@@ -104,6 +162,7 @@
          */
         $scope.changeToAdd = function(){
         	console.debug("changeToAdd");
+        	$scope.project = {};
         	
         }
         /**
@@ -112,6 +171,9 @@
         $scope.changeToDetail = function(){
         	console.debug("changeToDetail");
         }
+        /**
+         * 
+         */
         function querySearchProjecManagers(filters) {
             var deferred = $q.defer();
             $http.get('/UserList').success( function(data)  {
@@ -130,21 +192,36 @@
         	.success(function(data){
         		$mdToast.showSimple("Projeto salvo com sucesso!");
         		$state.go($scope.LIST_STATE);
-        		$scope.$apply();
 	        })
 	        .error(function(data){
 	        	$mdToast.showSimple(data);
-                $scope.$apply();
 			})
 			}
-        /*/*
-         * 
+        
+        
+        /**
+         * Realiza a consulta de registros, considerando filtro, paginação e sorting através dos eventos do "Enter" e "Backspace".
+         *
+         * @param event
          */
         $scope.listProjects = function () {
     		$http.get('/projectList').success( function(data)  {
     			$scope.projects = data;
     		})
     	}
+        /**
+         * 
+         */
+        $scope.openPopupAtividade = function(event){
+
+            $mdDialog.show({
+            	controller: "PopupAtividadeController",
+                templateUrl: 'ui/popup-atividades/popupAtividade.html',
+            	targetEvent: event
+                	 
+
+            });
+        };
         
 	});
 })(window.angular);

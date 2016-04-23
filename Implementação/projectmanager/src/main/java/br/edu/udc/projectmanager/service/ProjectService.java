@@ -3,6 +3,8 @@ package br.edu.udc.projectmanager.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -38,14 +40,20 @@ public class ProjectService {
 	 */
 	public Project insertProjeto(Project project)
 	{
-		Assert.notNull( project.getName(), "O nome do projeto não poder ser nulo." );
-		Assert.notNull( project.getInitialDate(), "Campo data inicial não pode ser nulo." );
-		Assert.notNull( project.getFinalDate(), "Campo data final não pode ser nulo." );
-		Assert.notNull( project.getProjectManager(), "Por favor escolha um gerente de projeto." );
 		Assert.isNull( project.getId(), "O projeto já esta cadastrado." );
 		
 		
 		return this.projectRepository.save(project);
+	}
+	/**
+	 * 
+	 * @param project
+	 * @return
+	 */
+	public Project updateProject (Project project)
+	{
+		return this.projectRepository.save(project);
+				
 	}
 	/**
 	 * 
@@ -71,6 +79,16 @@ public class ProjectService {
 	}
 	/**
 	 * 
+	 * @param projectId
+	 */
+	public void removeProject ( Long projectId )
+	{
+		Assert.notNull( projectId, "Por favor informe o projeto a ser inserido." );
+		
+		this.projectRepository.delete( projectId );
+	}
+	/**
+	 * 
 	 * @param filter
 	 * @param initialDate
 	 * @param finalDate
@@ -78,9 +96,9 @@ public class ProjectService {
 	 * @param pageable
 	 * @return
 	 */
-//	public Page<Project> listProjectsByFilters(String filter, Calendar initialDate, Calendar finalDate, ProjectStatus status, PageRequest pageable)
+//	public Page<Project> listProjectsByFilters(String filter, PageRequest pageable)
 //	{
-//		return this.projectRepository.listByFilters(filter, initialDate, finalDate, status, pageable);
+//		return this.projectRepository.listByFilters(filter, pageable);
 //	}
 	
 	/**

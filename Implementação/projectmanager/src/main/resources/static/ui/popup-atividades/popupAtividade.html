@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="pt">
+<meta charset="UTF-8">
+<md-dialog class="popup-participant"  aria-label="Popup User" style="width:900px;">
+	<form>
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Atividade</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="close()">
+					<md-icon md-font-set="material-icons"> close </md-icon>
+				</md-button>				
+			</div>
+ 	</md-toolbar>
+		
+	 	<md-dialog-content>
+	 	<div layout="column" layout-align="center center" >
+		 	<md-content layout-padding layout-fill>
+		  	<h4>Informações da Atividade</h4>
+				<md-radio-group ng-model="activity.status">
+					<md-radio-button value="INTERNAL" class="md-primary">Evento</md-radio-button>
+					<md-radio-button value="EXTERNAL" class="md-primary"> Ação</md-radio-button>
+				</md-radio-group>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Titulo da atividade</label>
+					<input ng-model="activity.name">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Responsável</label>
+					<input ng-model="activity.responsible">
+				</md-input-container>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Descrição da atividade</label>
+                    <textarea type="text" name="description" ng-model="activity.description" maxlength="2000"></textarea>
+				</md-input-container>
+					<label>Data Limite</label>
+                    <md-datepicker ng-model="activity.date" ></md-datepicker>
+                    
+                <div layout="row" layout-align="space-between center">
+	                <md-input-container  class="md-block" flex>
+						<label>Esforço estimado</label>
+						<input ng-model="activity.plain" style="width: 275px;">
+					</md-input-container>    
+					
+	                <md-input-container  class="md-block" flex>
+						<label>Duração</label>
+						<input ng-model="activity.work" style="width: 275px;">
+					</md-input-container>    
+				</div>				
+				
+			</md-content>
+		</div>
+	
+    	</md-dialog-content>
+		
+	</form>
+    <div class="md-dialog-actions" layout="row">
+    <span flex></span>
+        <md-button class="md-primary" ng-click="add()" style="font-size:12px;">
+            Adicionar
+        </md-button>
+
+        <md-button ng-click="close()" class="md-primary" style="font-size:12px;">
+            Fechar
+        </md-button>
+    </div>
+</md-dialog>
+</html>
