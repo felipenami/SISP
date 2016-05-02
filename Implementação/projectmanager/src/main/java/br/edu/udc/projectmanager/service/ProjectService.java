@@ -3,15 +3,15 @@ package br.edu.udc.projectmanager.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import br.edu.udc.projectmanager.entity.Activity;
 import br.edu.udc.projectmanager.entity.Project;
 import br.edu.udc.projectmanager.entity.ProjectStatus;
 import br.edu.udc.projectmanager.entity.User;
+import br.edu.udc.projectmanager.repository.IActivityRepository;
 import br.edu.udc.projectmanager.repository.IProjectRepository;
 import br.edu.udc.projectmanager.repository.IUserRepository;
 
@@ -28,6 +28,11 @@ public class ProjectService {
 	 * 
 	 */
 	@Autowired
+	private IActivityRepository activityRepository;
+	/**
+	 * 
+	 */
+	@Autowired
 	private IUserRepository userRepository;
 	/*-------------------------------------------------------------------
 	 *				 		     SERVICES
@@ -40,10 +45,10 @@ public class ProjectService {
 	 */
 	public Project insertProjeto(Project project)
 	{
-		Assert.isNull( project.getId(), "O projeto já esta cadastrado." );
 		
+		project = projectRepository.saveAndFlush(project);
 		
-		return this.projectRepository.save(project);
+		return project;
 	}
 	/**
 	 * 
@@ -70,6 +75,7 @@ public class ProjectService {
 	 */
 	public List<Project> findAll()
 	{
+		
 		return this.projectRepository.findAll();
 	}
 	
@@ -114,5 +120,25 @@ public class ProjectService {
 		
 		this.projectRepository.save( project );
 	}
+	/**
+	 * 
+	 * @param activity
+	 * @return
+	 */
+	public Activity insertAtividade(Activity activity)
+	{
+		activity = activityRepository.save(activity);
+		return activity;
+	}
+	/**
+	 * 
+	 * @param projectId
+	 * @return
+	 */
+	public List<Activity> findActivityByProjectId(Long projectId)
+	{
+		return activityRepository.listActivityByproject(projectId);
+	}
+	
 	
 }

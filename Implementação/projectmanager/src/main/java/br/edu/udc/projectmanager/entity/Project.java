@@ -1,5 +1,6 @@
 package br.edu.udc.projectmanager.entity;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,8 +19,12 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Project extends AbstractEntity {
+public class Project extends AbstractEntity implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1419352430096299677L;
 	/**
 	 * 
 	 */
@@ -59,8 +64,9 @@ public class Project extends AbstractEntity {
 	/**
 	 * 
 	 */
-	@OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "project" )
-	private Set<Activity> activities = new HashSet<Activity>();
+	
+//	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "project" )
+//	private Set<Activity> activities = new HashSet<Activity>();
 	/**
 	 * 
 	 */
@@ -69,7 +75,7 @@ public class Project extends AbstractEntity {
 	/**
 	 * 
 	 */
-	@OneToMany( cascade = CascadeType.REMOVE, fetch = FetchType.LAZY, mappedBy = "project" )
+	@OneToMany(mappedBy = "project", cascade = CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval = true)
 	private Set<Milestone> milestones = new HashSet<Milestone>();
 
 	/*-------------------------------------------------------------------
@@ -99,7 +105,7 @@ public class Project extends AbstractEntity {
 		this.initialDate = initialDate;
 		this.finalDate = finalDate;
 		this.name = name;
-		this.projectManager = new User();
+		this.projectManager = projectManager;
 		
 	}
 	
@@ -154,6 +160,33 @@ public class Project extends AbstractEntity {
 			return false;
 		return true;
 	}
+	
+	
+	
+//	public Project prepareSerialization()
+//	{
+//		Project project = new Project( this.getId(), 
+//										this.getStatus(), 
+//										this.getInitialDate(),
+//										this.getFinalDate(),
+//										this.getName(),
+//										this.getProjectManager());
+//										 
+//
+//		Set<Activity> activitySet = new HashSet<Activity>();
+//		
+//		for ( Activity activity : this.getActivities() )
+//		{
+//			Activity activityCopy = new Activity( activity.getId() );
+//			activityCopy.setProject( activity.getProject() );
+//			activitySet.add(activityCopy);
+//		}
+//		
+//		
+//		project.setActivities(activitySet);
+//		
+//		return project;
+//	}
 
 	/*-------------------------------------------------------------------
 	 *				 		     GETER'S AND SETER'S
@@ -198,13 +231,13 @@ public class Project extends AbstractEntity {
 		this.projectManager = projectManager;
 	}
 
-	public Set<Activity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(Set<Activity> activities) {
-		this.activities = activities;
-	}
+//	public Set<Activity> getActivities() {
+//		return activities;
+//	}
+//
+//	public void setActivities(Set<Activity> activities) {
+//		this.activities = activities;
+//	}
 
 	public Set<User> getMembers() {
 		return members;

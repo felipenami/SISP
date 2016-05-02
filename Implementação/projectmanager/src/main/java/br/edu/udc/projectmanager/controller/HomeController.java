@@ -2,19 +2,14 @@ package br.edu.udc.projectmanager.controller;
 
 import java.util.List;
 
-import org.junit.runner.Request;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.edu.udc.projectmanager.entity.Activity;
 import br.edu.udc.projectmanager.entity.Project;
 import br.edu.udc.projectmanager.entity.User;
 import br.edu.udc.projectmanager.service.ProjectService;
@@ -73,6 +68,16 @@ public class HomeController {
 	}
 	/**
 	 * 
+	 * @param project
+	 * @return
+	 */
+	@RequestMapping("/activitySave")
+	public Activity save (@RequestBody Activity activity){
+		
+		return projectService.insertAtividade(activity);
+	}
+	/**
+	 * 
 	 */
 	@RequestMapping("/projectFindById")
 	public Project findById (@RequestBody Long id){
@@ -101,15 +106,16 @@ public class HomeController {
 		 projectService.removeProject(projectId);;
 	}
 	
-//	@RequestMapping(value = "/listByFilters", method = RequestMethod.GET)
-//	public Page<Project> listByFilters( String filter, @PathVariable("pageable") PageRequest pageable)
-//	{
-//		return projectService.listProjectsByFilters(filter, pageable);
-//	}
-	
 	/*-------------------------------------------------------------------
 	 *				 		     ACTIVITY
-	 *-------------------------------------------------------------------*/	
+	 *-------------------------------------------------------------------*/
+	
+	@RequestMapping("/findActivityByProjectId")
+	public List<Activity> findActivityByProjectId (@RequestBody Long projectId)
+	{
+		return projectService.findActivityByProjectId(projectId);
+	}
+	
 	
 }
 

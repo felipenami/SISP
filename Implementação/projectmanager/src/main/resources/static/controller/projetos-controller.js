@@ -24,6 +24,14 @@
          */
         $scope.DETAIL_STATE = "projetos.detail";
         
+        $scope.activities = [];
+        $scope.milestones = [];
+        
+        $scope.projects = [];
+        $scope.projectManagers = {};
+        $scope.project = {}; 
+        
+        
         $scope.model = {
         		
                 filters: {
@@ -77,16 +85,14 @@
                     
             }
         });
-        
-        $scope.projects = [];
-        $scope.projectManagers = {};
-        $scope.project = {}; 
-        
         /**
          *  
          */
         $scope.changeToEdit = function (id) {
+        	$scope.activities = [];
+        	$scope.milestones = [];
             console.debug("changeToEdit", id);
+            $scope.findActivitiesByProjectId(id);
             $http.post('/projectFindById', id)
         	.success(function(data){
         		$scope.project = data
@@ -99,6 +105,14 @@
 	        	$mdToast.showSimple(data);
 			})
         }
+        
+        $scope.findActivitiesByProjectId = function(id){
+        	$http.post('/findActivityByProjectId', id)
+        	.success( function(data)  {
+    			$scope.activities = data;
+    		})
+        }
+        
         /**
          * Realiza os procedimentos iniciais (prepara o estado)
          * para a tela de exclusão.
@@ -141,6 +155,7 @@
         	$http.post('/updateProject', project)
         		.success(function(data){
         			$mdToast.showSimple("Projeto editado com sucesso!");
+        			$scope.saveActivities($scope.activities, data);
         			$state.go($scope.LIST_STATE);
         			
         		})
@@ -163,6 +178,8 @@
         $scope.changeToAdd = function(){
         	console.debug("changeToAdd");
         	$scope.project = {};
+        	$scope.activities = [];
+        	$scope.milestones = [];
         	
         }
         /**
@@ -191,14 +208,42 @@
 	        $http.post('/projectSave', project)
         	.success(function(data){
         		$mdToast.showSimple("Projeto salvo com sucesso!");
+        		$scope.saveActivities($scope.activities, data);
         		$state.go($scope.LIST_STATE);
 	        })
 	        .error(function(data){
-	        	$mdToast.showSimple(data);
 			})
 			}
         
-        
+        /**
+         * 
+         */
+        $scope.saveActivities = function(activities, project){
+        	
+        	 angular.forEach(activities, function( activity, key ) {
+        		
+        		activity.project = project;
+        		   $http.post('/activitySave', activity)
+               	.success(function(data){
+               		console.debug("save");
+       	        })
+       	        .error(function(data){
+       	        	$mdToast.showSimple(data);
+       			})
+        		
+        	})
+        	
+        }
+        $scope.finishActivity = function(activity){
+        	
+        	
+        	if(activity.status == 'FINISHED' ){
+        		$scope.myColor = {color : '#4caf50'};
+        	}
+        	if(activity.status == 'OPEN'){
+        		$scope.myColor = {};
+        	}
+        }
         /**
          * Realiza a consulta de registros, considerando filtro, paginação e sorting através dos eventos do "Enter" e "Backspace".
          *
@@ -212,16 +257,94 @@
         /**
          * 
          */
-        $scope.openPopupAtividade = function(event){
+        $scope.openPopupAtividade = function(event, activity){
 
             $mdDialog.show({
             	controller: "PopupAtividadeController",
                 templateUrl: 'ui/popup-atividades/popupAtividade.html',
-            	targetEvent: event
-                	 
+                scope: $scope.$new(),
+            	targetEvent: event,
+            	resolve: {
+            		activity: function () {
+                        return activity;
+                    }
+            	}
+            	
+            }).then(function(result){
+            	$timeout();
+                $scope.activities.push(result);
+                $mdToast.showSimple("Atividade adicionada com sucesso!")
 
             });
+
         };
+        /**
+         * 
+         */
+        $scope.removeActivity = function(activity){
+        	 var index = $scope.activities.indexOf(activity);
+        	 $scope.activities.splice(index, 1);
+        }
+        /**
+         * 
+         */
+        $scope.openPopupMilestone = function(event){
+
+            $mdDialog.show({
+            	controller: "PopupMilestoneController",
+                templateUrl: 'ui/popup-milestone/popupMilestone.html',
+                scope: $scope.$new(),
+            	targetEvent: event,
+            	resolve: {
+                    listActivities: function() {
+                        return $scope.activities;
+                    }
+                }
+            	
+            }).then(function(result){
+            	$timeout();
+                $scope.milestones.push(result);
+                $mdToast.showSimple("Milestone adicionado com sucesso!")
+
+            });
+
+        };
+        /**
+         * 
+         */
+        $scope.removeMilestone = function(milestone){
+       	 var index = $scope.milestones.indexOf(milestone);
+       	 $scope.milestones.splice(index, 1);
+       }
+        
+		//---------------------
+		//    POPUP DETAIL
+		//---------------------
+        /**
+         * 
+         */
+        $scope.openPopupDetail = function (event, project){
+        	
+        	$mdDialog.show({
+                templateUrl: 'ui/projetos-detail.html',
+                targetEvent: event,
+                scope: $scope.$new(),
+                resolve: {
+                	project: function () {
+                        return project
+                    }
+                },
+                controller : function ($scope, project) {
+                    $scope.project = project;
+                    $scope.findActivitiesByProjectId(project.id);
+                    
+                    
+                    $scope.close = function () {
+                        $mdDialog.cancel();
+                    };
+                }
+            });
+        }       
         
 	});
 })(window.angular);

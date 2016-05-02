@@ -17,18 +17,32 @@
 	 	<div layout="column" layout-align="center center" >
 		 	<md-content layout-padding layout-fill>
 		  	<h4>Informações da Atividade</h4>
-				<md-radio-group ng-model="activity.status">
-					<md-radio-button value="INTERNAL" class="md-primary">Evento</md-radio-button>
-					<md-radio-button value="EXTERNAL" class="md-primary"> Ação</md-radio-button>
+				<md-radio-group ng-model="activity.type">
+					<md-radio-button value="EVENT" class="md-primary">Evento</md-radio-button>
+					<md-radio-button value="ACTION" class="md-primary"> Ação</md-radio-button>
 				</md-radio-group>
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Titulo da atividade</label>
 					<input ng-model="activity.name">
 				</md-input-container>
-				<md-input-container class="md-block" flex-gt-sm>
-					<label>Responsável</label>
-					<input ng-model="activity.responsible">
-				</md-input-container>
+
+
+				<md-autocomplete type="search"
+							 md-no-cache="true"
+							 md-autofocus="false"
+							 md-selected-item="activity.responsible"
+							 md-search-text-change="searchTextChange(searchText)"
+							 md-search-text="searchText"
+							 md-selected-item-change="selectedItemChange(responsible)"
+							 md-items="responsible in querySearchResponsible(searchText)"
+							 md-item-text="responsible.name"
+							 md-min-length="1"
+							 md-floating-label="Responsável">
+				<md-item-template>
+					<span md-highlight-text="searchText">{{responsible.name}}</span>
+				</md-item-template>
+			</md-autocomplete>
+				
 				<md-input-container class="md-block" flex-gt-sm>
 					<label>Descrição da atividade</label>
                     <textarea type="text" name="description" ng-model="activity.description" maxlength="2000"></textarea>
@@ -38,25 +52,23 @@
                     
                 <div layout="row" layout-align="space-between center">
 	                <md-input-container  class="md-block" flex>
-						<label>Esforço estimado</label>
-						<input ng-model="activity.plain" style="width: 275px;">
+						<label>Esforço estimado (horas)</label>
+						<input ng-model="activity.workTime" style="width: 275px;">
 					</md-input-container>    
 					
 	                <md-input-container  class="md-block" flex>
-						<label>Duração</label>
-						<input ng-model="activity.work" style="width: 275px;">
+						<label>Duração (horas)</label>
+						<input ng-model="activity.duration" style="width: 275px;">
 					</md-input-container>    
 				</div>				
-				
 			</md-content>
 		</div>
-	
     	</md-dialog-content>
 		
 	</form>
     <div class="md-dialog-actions" layout="row">
-    <span flex></span>
-        <md-button class="md-primary" ng-click="add()" style="font-size:12px;">
+    	<span flex></span>
+        <md-button class="md-primary" ng-click="add(activity)" style="font-size:12px;">
             Adicionar
         </md-button>
 

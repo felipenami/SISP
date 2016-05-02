@@ -1,14 +1,11 @@
 package br.edu.udc.projectmanager.entity;
 
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
@@ -29,8 +26,8 @@ public class Milestone extends AbstractEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Calendar finalDate;
 	
-	@OneToMany( fetch = FetchType.LAZY )
-	private Set<Activity> activities = new HashSet<Activity>();
+//	@OneToMany( fetch = FetchType.LAZY )
+//	private Set<Activity> activities = new HashSet<Activity>();
 	
 	@ManyToOne( optional = false, fetch = FetchType.LAZY )
 	private Project project;
@@ -128,13 +125,13 @@ public class Milestone extends AbstractEntity {
 		this.finalDate = finalDate;
 	}
 
-	public Set<Activity> getActivities() {
-		return activities;
-	}
-
-	public void setActivities(Set<Activity> activities) {
-		this.activities = activities;
-	}
+//	public Set<Activity> getActivities() {
+//		return activities;
+//	}
+//
+//	public void setActivities(Set<Activity> activities) {
+//		this.activities = activities;
+//	}
 
 	public Project getProject() {
 		return project;

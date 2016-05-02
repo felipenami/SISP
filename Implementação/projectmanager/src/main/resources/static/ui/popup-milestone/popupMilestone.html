@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="pt">
+<meta charset="UTF-8">
+<md-dialog class="popup-participant"  aria-label="Popup User" style="width:900px;">
+	<form>
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Atividade</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="close()">
+					<md-icon md-font-set="material-icons"> close </md-icon>
+				</md-button>				
+			</div>
+ 	</md-toolbar>
+		
+	 	<md-dialog-content>
+	 	<div layout="column" layout-align="center center" >
+		 	<md-content layout-padding layout-fill>
+		  	<h4>Informações de Milestone</h4>
+				<md-input-container class="md-block" flex-gt-sm>
+					<label>Titulo do Milestone</label>
+					<input ng-model="milestone.name">
+				</md-input-container>
+				
+					<label>Data Limite</label>
+                    <md-datepicker ng-model="milestone.date" ></md-datepicker>
+                    
+				<h4>Atividades</h4>
+				<md-list>
+		            <md-list-item ng-repeat="activity in activities" class="box-list-item box-whiteframe md-whiteframe-z2">
+		                <div layout="row" flex>
+		                    <div layout="row">
+		                        <md-checkbox ng-model="activity.selected" ng-click="null" aria-label="Selecionar Atividade"></md-checkbox>
+		                    </div>
+		                    <div layout="column" flex style="padding-bottom:15px;">
+		                        <div class="box-text-overflow" style="margin: 15px 0 15px 0;">
+		                            <label>{{activity.name}}</label>
+		                        </div>
+		                        <div layout="row">
+		                            <div class="box-text-overflow" style="margin-right:10px;" flex>
+		                                <label class="grey" title="{{activity.responsible.name}}">Responsável: {{activity.responsible.name}}</label>
+		                            </div>
+		                        </div>
+		                    </div>
+		                </div>
+		            </md-list-item>
+		        </md-list>
+        	</md-content>
+		</div>
+    	</md-dialog-content>
+		
+	</form>
+    <div class="md-dialog-actions" layout="row">
+    <span flex></span>
+        <md-button class="md-primary" ng-click="add(milestone)" style="font-size:12px;">
+            Adicionar
+        </md-button>
+
+        <md-button ng-click="close()" class="md-primary" style="font-size:12px;">
+            Fechar
+        </md-button>
+    </div>
+</md-dialog>
+</html>

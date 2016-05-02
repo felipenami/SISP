@@ -41,8 +41,8 @@
 						</div>
 					</div>
 					<div layout="row" layout-align="end start" class="child-list-item padding-top-item" flex style="margin:10px 0 0 60px;">
-						<div style="color: #4caf50">
-							<label ng-if="(project.status == 'ABERTO')">Aberto</label>
+						<div >
+							<label style="color: #4caf50" ng-if="(project.status == 'ABERTO')">Aberto</label>
 							<label ng-if="(project.status == 'EM_EXECUCAO')">Execução</label>
 							<label ng-if="(project.status == 'PARADO')">Parado</label>
 							<label ng-if="(project.status == 'CONCLUIDO')">Concluído</label>
@@ -60,7 +60,7 @@
 										<md-button ng-click="$state.go( EDIT_STATE, {id:project.id})"><span md-menu-align-target>Editar</span></md-button>
 									</md-menu-item>
 									<md-menu-item>
-										<md-button ng-click="openPopupDetail(event, training)"><span md-menu-align-target>Visualizar</span></md-button>
+										<md-button ng-click="openPopupDetail(event, project)"><span md-menu-align-target>Visualizar</span></md-button>
 									</md-menu-item>
 									<md-menu-item>
 										<md-button ng-click="changeToRemove($event, project.id)"><span md-menu-align-target>Excluir</span></md-button>

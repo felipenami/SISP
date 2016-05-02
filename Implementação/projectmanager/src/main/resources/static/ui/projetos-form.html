@@ -48,16 +48,88 @@
 					<h3>Atividades</h3>
 				</div>
 				 <div layout="row" layout-align="end start" class="colorNested" flex style="padding-top:10px;">
-				 	<md-button ng-click="openPopupAtividade(event)"  class="md-raised">ADICIONAR ATIVIDADE</md-button>
+				 	<md-button ng-click="openPopupAtividade(event, null)"  class="md-raised">ADICIONAR ATIVIDADE</md-button>
 				 </div>
 			  </div>
-			  </md-content>
+			  
+				<md-list >
+					<md-list-item ng-repeat="activity in activities" class="box-whiteframe md-whiteframe-z2 ">
+						<div layout="row" layout-fill>
+		                    <div layout="column" flex style="padding-bottom:15px;">
+		                        <div class="box-text-overflow" style="margin: 15px 0 15px 0;">
+		                            <label>{{activity.name}}</label>
+		                        </div>
+		                        <div layout="row">
+		                            <div class="box-text-overflow" style="margin-right:10px;" flex>
+		                                <label class="grey" title="{{activity.responsible.name}}">Responsável: {{activity.responsible.name}}</label>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <div layout="row" layout-align="end start" class="colorNested" flex style="padding-top:10px;">
+		                    <div>
+								  	<md-button ng-click="finishActivity(activity)" class="md-icon-button">
+								  		<md-icon ng-style="myColor" md-font-set="material-icons"> done </md-icon>
+							  		</md-button>
+							  		<md-tooltip>Finalizar Atividade</md-tooltip>
+						  		</div>
+						  		<div>
+								  	<md-button ng-click="openPopupAtividade(event, activity)" class="md-icon-button">
+								  		<md-icon md-font-set="material-icons"> edit </md-icon>
+							  		</md-button>
+							  		<md-tooltip>Editar Atividade</md-tooltip>
+						  		</div>
+		                    	<div>
+								  	<md-button ng-click="removeActivity(activity)" class="md-icon-button">
+								  		<md-icon md-font-set="material-icons"> delete </md-icon>
+								  		<md-tooltip>Remover Atividade</md-tooltip>
+							  		</md-button>
+						  		</div>
+		                    	
+						  		
+					  		</div>
+		                </div>
+				 	</md-list-item>
+			 	</md-list>
+			</md-content>
       		</md-tab>
       		<md-tab label="Milestones">
 	        	<md-content class="md-padding">
 		        	<div layout="row">
 		        		<h3>Milestones</h3>
+		        		<div layout="row" layout-align="end start" class="colorNested" flex style="padding-top:10px;">
+							<md-button ng-click="openPopupMilestone(event)"  class="md-raised">ADICIONAR MILESTONE</md-button>
+						</div>
 					 </div>
+					 <md-list >
+					<md-list-item ng-repeat="milestone in milestones" class="box-whiteframe md-whiteframe-z2 ">
+		
+		
+		
+		
+								<div layout="row" layout-fill>
+				                    <div layout="column" flex style="padding-bottom:15px;">
+				                        <div class="box-text-overflow" style="margin: 15px 0 15px 0;">
+				                            <label>{{milestone.name}}</label>
+				                        </div>
+				                        <div layout="row">
+				                            <div class="box-text-overflow" style="margin-right:10px;" flex>
+				                                <label class="grey" title="{{milestone.date}}">Data limite: {{milestone.date | date: 'HH:mm'}}</label>
+				                            </div>
+				                        </div>
+				                    </div>
+				                    <div layout="row" layout-align="end start" class="colorNested" flex style="padding-top:10px;">
+				                    	<div>
+										  	 <md-button ng-click="removeMilestone(milestone)" class="md-icon-button">
+										  		<md-icon md-font-set="material-icons"> delete </md-icon>
+									  		</md-button>
+								  		</div>
+							  		</div>
+				                </div>
+		
+					  	
+						  	 
+				 	</md-list-item>
+			 	</md-list>
 				  	</div>
 	        	</md-content>
         	</md-tab>

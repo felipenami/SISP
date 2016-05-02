@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org" lang="pt">
+<meta charset="UTF-8">
+<md-toolbar layout="row" layout-align="start center">
+		<div layout="row" layout-align="start center" style="margin: 0 24px 0 24px; width:752px;">
+			<div class="box-text-overflow" style="color:#FFFFFF;width:80%;" flex="80">
+				<label title="{{project.name}}">{{project.name}}</label>
+			</div>
+		</div>
+	</md-toolbar>
+<div>
+	<md-dialog-content class="dialog-content sectionsPopup">
+		<md-content class="md-padding">
+		<h4>Informações</h4>	
+			<div layout="row" layout-align="start center" style="margin-top:10px">
+				<div>
+					Gerente do Projeto<span style="margin-left: 78px;">{{project.projectManager.name}}</span> 
+				</div>
+			</div>
+			<div layout="row" layout-align="start center" style="margin-top:20px; margin-bottom : 20px">
+				<div>
+					Status do Projeto 
+					<span style="margin-left: 82px;" ng-if="(project.status == 'EM_EXECUCAO')">Execução</span> 
+					<span style="margin-left: 82px;" ng-if="(project.status == 'ABERTO')">Aberto</span> 
+					<span style="margin-left: 82px;" ng-if="(project.status == 'PARADO')">Parado</span> 
+					<span style="margin-left: 82px;" ng-if="(project.status == 'CONCLUIDO')">Concluído</span> 
+					<span style="margin-left: 82px;" ng-if="(project.status == 'CANCELADO')">Cancelado</span> 
+					</div>
+			</div>
+			
+			<md-divider style=" width: 500px;"></md-divider>
+			
+			<div layout="row" layout-align="start center" style="margin-top:20px;margin-bottom:20px">
+				<md-button class="md-icon-button">
+					<md-icon md-font-set="material-icons">event</md-icon>
+				</md-button>
+					Data Inicial<span style="margin-left: 69px;">{{project.initialDate | date: "dd'/'MM'/'yyyy"  }}</span>
+			</div>
+			<div layout="row" layout-align="start center" style="margin-top:20px;margin-bottom:20px">
+				<md-button class="md-icon-button">
+					<md-icon md-font-set="material-icons">event</md-icon>
+				</md-button>
+					Data Final<span style="margin-left: 78px;">{{project.finalDate | date: "dd'/'MM'/'yyyy"  }}</span>
+			</div>
+			<md-divider style=" width: 500px;"></md-divider>
+			
+			<h4>ATIVIDADES</h4>	
+				<div layout="column" flex style="overflow:auto;">
+					<md-list>
+						<md-list-item ng-repeat="activity in activities" class="box-whiteframe md-whiteframe-z1" >
+							<div layout="row" layout-fill>
+				                    <div layout="column" flex style="padding-bottom:15px;">
+				                        <div class="box-text-overflow" style="margin: 15px 0 15px 0;">
+				                            <label>{{activity.name}}</label>
+				                        </div>
+				                        <div layout="row">
+				                            <div class="box-text-overflow" style="margin-right:10px;" flex>
+				                                <label class="grey" title="{{activity.responsible.name}}">Responsável: {{activity.responsible.name}}</label>
+				                            </div>
+				                        </div>
+				                    </div>
+				                </div>
+						</md-list-item>
+					</md-list>
+				</div>	
+			
+		</md-content>
+	</md-dialog-content>
+</div>
+	<div class="md-dialog-actions" layout="row">
+    <span flex></span>
+        <md-button ng-click="close()" class="md-primary" style="font-size:12px;">
+            Fechar
+        </md-button>
+    </div>
+</html>
